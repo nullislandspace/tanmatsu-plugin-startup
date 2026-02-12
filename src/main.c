@@ -1,26 +1,21 @@
 // SPDX-License-Identifier: MIT
-// Startup Plugin - Displays logo and plays startup sound
+// Startup Plugin - Plays startup sound
 //
-// Blocks launcher initialization until startup animation completes.
+// Blocks launcher initialization until startup sound completes.
 // Uses autostart: true to run at boot.
 
 #include "tanmatsu_plugin.h"
 #include "audio.h"
-#include "pax_gfx.h"
-#include <pax_codecs.h>
-#include <asp/display.h>
-#include <stdio.h>
 
-#define LOGO_PATH "/int/plugins/tanmatsu_startup.png"
 #define AUDIO_PATH "/int/plugins/tanmatsu_startup.mp3"
 
 // Plugin metadata
 static const plugin_info_t plugin_info = {
-    .name = "Startup Animation",
+    .name = "Startup Sound",
     .slug = "startup",
     .version = "1.0.0",
     .author = "Tanmatsu",
-    .description = "Displays logo and plays sound at startup",
+    .description = "Plays sound at startup",
     .api_version = TANMATSU_PLUGIN_API_VERSION,
     .type = PLUGIN_TYPE_SERVICE,
     .flags = 0,
@@ -30,43 +25,6 @@ static const plugin_info_t* get_info(void) {
     return &plugin_info;
 }
 
-static bool display_logo(void) {
-    pax_buf_t* fb = NULL;
-    asp_disp_get_pax_buf(&fb);
-    if (!fb) {
-        asp_log_error("startup", "Failed to get framebuffer");
-        return false;
-    }
-
-    asp_log_info("startup", "Screen size: %dx%d", fb->width, fb->height);
-
-    // Clear to black
-    pax_background(fb, 0xFF000000);
-
-    // Load PNG
-    FILE* f = fopen(LOGO_PATH, "rb");
-    if (!f) {
-        asp_log_error("startup", "Cannot open %s", LOGO_PATH);
-        asp_disp_write_pax(fb);
-        return false;
-    }
-
-    asp_log_info("startup", "Decoding PNG...");
-    bool result = pax_insert_png_fd(fb, f, 0, 0, 0);
-    fclose(f);
-
-    if (!result) {
-        asp_log_error("startup", "Failed to decode PNG");
-        asp_disp_write_pax(fb);
-        return false;
-    }
-
-    asp_log_info("startup", "Writing to display...");
-    asp_disp_write_pax(fb);
-    asp_log_info("startup", "Logo displayed successfully");
-    return true;
-}
-
 static int plugin_init(plugin_context_t* ctx) {
     asp_log_info("startup", "Initializing...");
 
@@ -74,11 +32,6 @@ static int plugin_init(plugin_context_t* ctx) {
     if (audio_init() != 0) {
         asp_log_error("startup", "Audio init failed");
         return -1;
-    }
-
-    // Display logo
-    if (!display_logo()) {
-        asp_log_warn("startup", "Logo display failed, continuing with audio only");
     }
 
     // Play audio

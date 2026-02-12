@@ -1,11 +1,11 @@
 {
-    "name": "Startup Animation",
+    "name": "Startup Sound",
     "slug": "startup",
     "version": "1.0.0",
     "author": "Tanmatsu",
-    "description": "Displays logo and plays sound at startup",
+    "description": "Plays sound at startup",
     "type": "service",
     "api_version": 2,
-    "permissions": ["display", "audio", "storage"],
+    "permissions": ["audio", "storage"],
     "autostart": false
 }

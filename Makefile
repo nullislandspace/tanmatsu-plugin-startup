@@ -34,7 +34,6 @@ install: build
 	@mkdir -p $(DEST)/$(PLUGIN_NAME)
 	@cp $(BUILD_DIR)/$(PLUGIN_NAME).plugin $(DEST)/$(PLUGIN_NAME)/
 	@cp plugin.json $(DEST)/$(PLUGIN_NAME)/
-	@cp tanmatsu_startup.png $(DEST)/tanmatsu_startup.png
 	@cp tanmatsu_startup.mp3 $(DEST)/tanmatsu_startup.mp3
 	badgefs -u $(BADGEDIR)
 	@echo "Installed to $(DEST)/$(PLUGIN_NAME)/"
