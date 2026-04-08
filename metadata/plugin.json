@@ -1,9 +1,4 @@
 {
-    "name": "Startup Sound",
-    "slug": "at.cavac.startup",
-    "version": "1.0.0",
-    "author": "Rene Schickbauer",
-    "description": "Plays sound at startup",
     "type": "service",
     "api_version": 2,
     "permissions": ["audio", "storage"],
