@@ -5,16 +5,16 @@
 // Uses autostart: true to run at boot.
 
 #include "tanmatsu_plugin.h"
+#include "plugin_context.h"
 #include "audio.h"
-
-#define AUDIO_PATH "/int/plugins/tanmatsu_startup.mp3"
+#include <stdio.h>
 
 // Plugin metadata
 static const plugin_info_t plugin_info = {
     .name = "Startup Sound",
-    .slug = "startup",
+    .slug = "at.cavac.startup",
     .version = "1.0.0",
-    .author = "Tanmatsu",
+    .author = "Rene Schickbauer",
     .description = "Plays sound at startup",
     .api_version = TANMATSU_PLUGIN_API_VERSION,
     .type = PLUGIN_TYPE_SERVICE,
@@ -34,8 +34,12 @@ static int plugin_init(plugin_context_t* ctx) {
         return -1;
     }
 
+    // Build audio path from plugin install directory
+    char audio_path[512];
+    snprintf(audio_path, sizeof(audio_path), "%s/tanmatsu_startup.mp3", ctx->plugin_path);
+
     // Play audio
-    audio_play_file(AUDIO_PATH);
+    audio_play_file(audio_path);
 
     // Block until audio finishes - this prevents launcher from continuing
     while (!audio_is_finished()) {

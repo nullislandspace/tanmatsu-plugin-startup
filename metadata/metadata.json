@@ -1,0 +1,32 @@
+{
+    "name": "Startup Sound",
+    "description": "Plays sound at startup",
+    "categories": [
+        "tools"
+    ],
+    "version": "1.0.0",
+    "icon": {},
+    "author": "Rene Schickbauer",
+    "license_type": "MIT",
+    "application": [
+        {
+            "targets": [
+                "tanmatsu",
+                "konsool"
+            ],
+            "revision": 1,
+            "type": "plugin",
+            "executable": "startup.plugin",
+            "assets": [
+                {
+                    "source_file": "plugin.json",
+                    "target_file": "plugin.json"
+                },
+                {
+                    "source_file": "tanmatsu_startup.mp3",
+                    "target_file": "tanmatsu_startup.mp3"
+                }
+            ]
+        }
+    ]
+}
