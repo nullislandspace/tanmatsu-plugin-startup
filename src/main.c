@@ -41,8 +41,9 @@ static int plugin_init(plugin_context_t* ctx) {
     // Play audio
     audio_play_file(audio_path);
 
-    // Block until audio finishes - this prevents launcher from continuing
-    while (!audio_is_finished()) {
+    // Block until audio finishes - this prevents launcher from continuing.
+    // Bail out early if the plugin manager wants us to stop.
+    while (!audio_is_finished() && !asp_plugin_should_stop(ctx)) {
         asp_plugin_delay_ms(50);
     }
 
